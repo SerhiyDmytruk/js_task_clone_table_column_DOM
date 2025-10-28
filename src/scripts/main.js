@@ -1,21 +1,20 @@
 'use strict';
 
-// write your code here
 const table = document.querySelector('table');
 
 function extendNonBodyBlock(block) {
-  Array.from(block.rows).forEach((item) => {
-    const clone = item.cells[1].cloneNode(true);
-    const targetCell = item.cells[block.rows[0].cells.length - 2];
+  if (!block) {
+    return;
+  }
+
+  Array.from(block.rows).forEach((row) => {
+    const clone = row.cells[1].cloneNode(true);
+    const targetCell = row.cells[row.cells.length - 2];
 
     targetCell.after(clone);
   });
 }
 
-const tHead = table.tHead;
-const tFoot = table.tFoot;
-const tBody = table.tBodies[0];
-
-[tHead, tFoot, tBody].forEach((block) => {
+[table.tHead, table.tFoot, ...table.tBodies].forEach((block) => {
   extendNonBodyBlock(block);
 });
